@@ -1,48 +1,49 @@
-const crypto = require(`crypto`)
-
+const crypto = require(`crypto`);
 
 exports.createPages = ({ actions, reporter }) => {
-  actions.createPage({
-    path: "/",
-    component: require.resolve("./src/pages/index.js")
-  })
-}
+	actions.createPage({
+		path: '/',
+		component: require.resolve('./src/pages/index.js')
+	});
+};
 
+exports.sourceNodes = (
+	{ actions: { createTypes, createNode } },
+	{
+		// SEO
+		title = 'Connor Leech',
+		description = "Hi, my name is Connor Leech. I'm a Content Designer living in Austin, Texas.",
+		siteUrl = 'https://connorlee.ch',
+		appName = 'Connor Leech', // Progressive Web App Name
 
-exports.sourceNodes = ({ actions: { createTypes, createNode } }, {
-  // SEO
-  title = "Minimalist Portfolio Gatsby Theme",
-  description = "Hi, my name is Filipe Santos Correa. I\'m a Front-End Engineer from Karlsruhe - Germany.",
-  siteUrl = "https://filipesantoscorrea.com",
-  appName = "Filipe Santos Correa", // Progressive Web App Name
-
-  // Content
-  headline = "Filipe Santos Correa",
-  subHeadline = "I'm a <strong>Front-End</strong> Engineer.<br/> I <strong>love</strong> to create new things everyday.",
-  socialList = [
-    {
-      icon: 'FaGithub',
-      url: 'https://github.com/Safi1012',
-      ariaLabel: 'Link to my GitHub profile',
-    },
-    {
-      icon: 'FaTwitter',
-      url: 'https://twitter.com/safi1012',
-      ariaLabel: 'Link to my Twitter profile',
-    },
-    {
-      icon: 'FaLinkedin',
-      url: 'https://www.linkedin.com/in/filipe-santoscorrea',
-      ariaLabel: 'Link to my LinkedIn profile',
-    },
-    {
-      icon: 'FaDribbble',
-      url: 'https://dribbble.com/safi1012',
-      ariaLabel: 'Link to my Dribbble profile',
-    }
-  ]
-}) => {
-  createTypes(`
+		// Content
+		headline = 'Connor Leech',
+		subHeadline = "I'm a <strong>Content Designer</strong>.<br/> I write for IBM's<br/><strong>design system</strong>.",
+		socialList = [
+			{
+				icon: 'FaGithub',
+				url: 'https://github.com/connor-leech',
+				ariaLabel: 'Link to my GitHub profile'
+			},
+			{
+				icon: 'FaMedium',
+				url: 'https://medium.com/carbondesign',
+				ariaLabel: 'Link to the Carbon Design Medium page'
+			},
+			{
+				icon: 'FaTwitter',
+				url: 'https://twitter.com/_connorleech',
+				ariaLabel: 'Link to my Twitter profile'
+			},
+			{
+				icon: 'FaLinkedin',
+				url: 'https://www.linkedin.com/in/connortleech/',
+				ariaLabel: 'Link to my LinkedIn profile'
+			}
+		]
+	}
+) => {
+	createTypes(`
     type MinimalistConfig implements Node {
       title: String!
       description: String!
@@ -59,31 +60,28 @@ exports.sourceNodes = ({ actions: { createTypes, createNode } }, {
       url: String
       ariaLabel: String
     }
-  `)
+  `);
 
-  const minimalistConfig = {
-    title,
-    description,
-    siteUrl,
-    appName,
-    headline,
-    subHeadline,
-    socialList
-  }
+	const minimalistConfig = {
+		title,
+		description,
+		siteUrl,
+		appName,
+		headline,
+		subHeadline,
+		socialList
+	};
 
-  createNode({
-    ...minimalistConfig,
-    id: `gatsby-theme-minimalist-config`,
-    parent: null,
-    children: [],
-    internal: {
-      type: `MinimalistConfig`,
-      contentDigest: crypto
-        .createHash(`md5`)
-        .update(JSON.stringify(minimalistConfig))
-        .digest(`hex`),
-      content: JSON.stringify(minimalistConfig),
-      description: `Minimalist Theme Config`,
-    },
-  })
-}
+	createNode({
+		...minimalistConfig,
+		id: `gatsby-theme-minimalist-config`,
+		parent: null,
+		children: [],
+		internal: {
+			type: `MinimalistConfig`,
+			contentDigest: crypto.createHash(`md5`).update(JSON.stringify(minimalistConfig)).digest(`hex`),
+			content: JSON.stringify(minimalistConfig),
+			description: `Minimalist Theme Config`
+		}
+	});
+};
